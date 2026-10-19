@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueryMind AI — Dual-Role Text-to-SQL Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">⚡</div>
+                <div>
+                    <h2>QueryMind AI</h2>
+                    <span class="badge" id="role-badge">Student Mode</span>
+                </div>
+            </div>
+
+            <div class="role-selector-card">
+                <span class="role-title">CURRENT ROLE ACCESS:</span>
+                <div class="role-toggle-group">
+                    <button type="button" class="role-btn active" id="btn-role-student">
+                        🎓 Student<br><small>Read Only</small>
+                    </button>
+                    <button type="button" class="role-btn" id="btn-role-associate">
+                        🏛️ College Associate<br><small>Read & Write</small>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="schema-header">
+                    <h3>Permitted Schema</h3>
+                    <button id="refresh-schema-btn" title="Refresh Live Database Schema" class="icon-btn">🔄</button>
+                </div>
+                <div id="schema-viewer" class="schema-list">
+                    <p class="loading-text">Loading schema...</p>
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <span class="dot" id="access-dot"></span>
+                <span id="access-desc">Read-Only Enforced</span>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h1>Natural Language SQL Console</h1>
+                    <p class="subtext" id="role-subtext">Viewing as Student (Queries are constrained to SELECT only).</p>
+                </div>
+                <div class="tags">
+                    <div id="mode-selector" class="mode-toggle hidden">
+                        <button type="button" class="mode-btn active" id="mode-nl">AI Prompt</button>
+                        <button type="button" class="mode-btn" id="mode-sql">Direct SQL</button>
+                    </div>
+                    <span class="badge secondary">SQLGlot Guarded</span>
+                </div>
+            </header>
+
+            <section class="prompt-box">
+                <form id="query-form">
+                    <div class="input-row">
+                        <textarea id="question-input" rows="2" placeholder="Ask questions or type changes in plain English or Hindi..." required></textarea>
+                        <button type="submit" id="submit-btn">
+                            <span id="btn-text">Execute</span>
+                            <span id="btn-spinner" class="spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="chips" id="chips-container">
+                    <span>Try:</span>
+                    <button class="chip" data-q="show all data of students">Show All Student Data</button>
+                    <button class="chip" data-q="show all student name and their marks">Exact: Names & Marks</button>
+                    <button class="chip associate-only hidden" data-q='replace 3rd student name to "Himanshu" and 4th student name to "Himanshu Prajapati"'>Multi-Update: 3rd & 4th Student</button>
+                    <button class="chip associate-only hidden" data-q="change marks of Aarav Sharma is 99">Change Marks of Aarav to 99</button>
+                    <button class="chip associate-only hidden" data-q='add new student who has name "Prem Prajapati" and student Id "115" and department id "2" marks "92.5"'>Add Prem Prajapati</button>
+                </div>
+            </section>
+
+            <div id="error-alert" class="alert hidden"></div>
+            <div id="success-banner" class="success-banner hidden"></div>
+
+            <section id="telemetry-box" class="telemetry-bar hidden">
+                <div class="t-item"><span class="t-lbl">Role</span><span id="t-role" class="t-val pill">STUDENT</span></div>
+                <div class="t-item"><span class="t-lbl">Action</span><span id="t-action" class="t-val pill">-</span></div>
+                <div class="t-item"><span class="t-lbl">Classifier</span><span id="t-src" class="t-val pill">-</span></div>
+                <div class="t-item"><span class="t-lbl">Gen Time</span><span id="t-gen" class="t-val">0ms</span></div>
+                <div class="t-item"><span class="t-lbl">Exec Time</span><span id="t-exec" class="t-val">0ms</span></div>
+            </section>
+
+            <section id="sql-panel" class="card hidden">
+                <div class="card-head">
+                    <span id="sql-label">Generated SQL Statement</span>
+                    <button id="copy-btn" class="btn-sm">Copy</button>
+                </div>
+                <pre><code id="sql-view"></code></pre>
+            </section>
+
+            <section id="results-panel" class="card hidden">
+                <div class="card-head">
+                    <span id="result-title">Result Set</span>
+                    <span id="row-badge" class="badge">0 rows</span>
+                </div>
+                <div class="table-wrap">
+                    <table id="data-table">
+                        <thead id="tbl-head"></thead>
+                        <tbody id="tbl-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
