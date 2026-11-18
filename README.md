@@ -1,5 +1,6 @@
 ﻿# Text-to-SQL-with-a-Clarification-Engine
 ------------------Steps to run project---------
+
 **Step 1: Repository clone karein**
 git clone https://github.com/<your-username>/QueryMind.git
 cd QueryMind
