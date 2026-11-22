@@ -10,7 +10,7 @@ from app.api.routes import router
 
 
 
-app = FastAPI(title="QueryMind AI — Multi-Database College Console")
+app = FastAPI(title="QueryGenie : AI-Powered Natural Language To SQL System with Clarification Engine")
 
 
 
